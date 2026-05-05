@@ -4,11 +4,9 @@ using System;
 using System.IO;
 using System.Linq;
 
-#if UNITY_ADDRESSABLES
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Build;
-#endif
 
 public class BuildTargetPlatform
 {
@@ -46,11 +44,7 @@ public class BuildTargetPlatform
             options = BuildOptions.None
         };
 
-#if UNITY_ADDRESSABLES
         BuildAddressables();
-#else
-        Debug.Log("Addressables not installed. Skipping Addressables build.");
-#endif
 
         Debug.Log("Building project...");
         var report = BuildPipeline.BuildPlayer(options);
@@ -63,7 +57,6 @@ public class BuildTargetPlatform
         Debug.Log($"Build succeeded: {buildPath}");
     }
 
-#if UNITY_ADDRESSABLES
     private static void BuildAddressables()
     {
         Debug.Log("Building Addressables...");
@@ -86,7 +79,6 @@ public class BuildTargetPlatform
 
         Debug.Log("Addressables build completed.");
     }
-#endif
 
     private static string[] GetEnabledScenes()
     {
